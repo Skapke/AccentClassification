@@ -7,3 +7,4 @@ data
 *.png
 
 !img/subset/*.png
+
