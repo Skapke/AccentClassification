@@ -4,6 +4,3 @@ data
 
 *.pyc
 *.ipynb
-*.png
-
-!img/subset/*.png
