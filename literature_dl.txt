@@ -1,0 +1,15 @@
+Audio Augmentation for Speech Recognition : https://www.danielpovey.com/files/2015_interspeech_augmentation.pdf
+
+Classification of accents of English Speakers by Native Language : http://cs229.stanford.edu/proj2014/Morgan%20Bryant,%20Amanda%20Chow,%20Sydney%20Li,%20Classification%20of%20Accents%20of%20English%20Speakers%20by%20Native%20Language.pdf
+
+Fast R-CNN: https://arxiv.org/abs/1504.08083
+
+Automatic Segmentation of Spontaneous Speech : https://hal.archives-ouvertes.fr/hal-01908434/document
+
+SpecAugment: A Simple Data Augmentation Method for Automatic Speech Recognition : https://arxiv.org/abs/1904.08779
+
+Application of Convolutional Neural Networks in Accent Identification : http://www.andrew.cmu.edu/user/yyin1/resume/cnn_project_report.pdf
+
+Deep Learning for Classification of Speech Accents in Video Games - Sergio Poo Hernandez and Vadim Bulitko  
+
+Deep Learning Approach to Accent Classification - Leon Mak An Sheng, Mok Wei Xiong Edmund
