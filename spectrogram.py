@@ -20,7 +20,7 @@ import torchaudio
 import matplotlib.pyplot as plt
 
 import os
-folders = ["data", "data/recordings", "data/subset", "img", "img/subset"]
+folders = ["data", "data/recordings", "data/subset", "img", "img/original", "img/modified"]
 for folder in folders:
     if not os.path.exists(folder):
         os.makedirs(folder)
@@ -46,14 +46,14 @@ def save_spectrogram(data, filename):
     fig.add_axes(ax)
     ax.imshow(data, cmap='gray', aspect='auto')
     
-    fig.savefig("img/subset/" + filename + ".png", dpi=1)
+    fig.savefig("img/modified/" + filename + ".png", dpi=1)
     fig.clf()
 
 
 # ### Tell it where to find the files
 
 # params to find the files
-data_path = "data/subset"
+data_path = "audio_files/modified"
 all_filenames = get_files(data_path)
 print(all_filenames)
 #test_filenames = [x for x in all_filenames if "german" in x]
