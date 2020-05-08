@@ -18,9 +18,8 @@
 import torch
 import torchaudio
 import matplotlib.pyplot as plt
-
 import os
-folders = ["data", "data/recordings", "data/subset", "img", "img/original", "img/modified"]
+folders = ["data", "data/recordings", "data/subset", "img"]
 for folder in folders:
     if not os.path.exists(folder):
         os.makedirs(folder)
@@ -34,9 +33,8 @@ def get_files(path):
 
 # ### Save the spectrogram to a .png file
 
-def save_spectrogram(data, filename, filepath):
+def save_spectrogram(data, filename):
     height = 200
-    #width = int((specgram.size()[2]/specgram.size()[1]) * height)
     width = height*2
 
     fig.set_size_inches(width, height)
@@ -46,7 +44,7 @@ def save_spectrogram(data, filename, filepath):
     fig.add_axes(ax)
     ax.imshow(data, cmap='gray', aspect='auto')
     
-    fig.savefig("img/" + filepath + "/" + filename + ".png", dpi=1)
+    fig.savefig("img/spectograms/" + filename + ".png", dpi=1)
     fig.clf()
 
 
@@ -99,7 +97,7 @@ for index, file in enumerate(modified_filenames):
     specgram = torchaudio.compliance.kaldi.spectrogram(waveform, dither=0.)
     
     # plot spectrogram and store it
-    save_spectrogram(specgram.t().numpy(), file[:-4], "modified")
+    save_spectrogram(specgram.t().numpy(), file[:-4])
 
     print(f"Progress:\t{round(((1+index)/total_number_files)*100, 2)}%", end='\r')
     
@@ -109,7 +107,7 @@ for index, file in enumerate(original_filenames):
     specgram = torchaudio.compliance.kaldi.spectrogram(waveform, dither=0.)
     
     # plot spectrogram and store it
-    save_spectrogram(specgram.t().numpy(), file[:-4], "original")
+    save_spectrogram(specgram.t().numpy(), file[:-4])
 
     print(f"Progress:\t{round(((1+len(modified_filenames)+index)/total_number_files)*100, 2)}%", end='\r')
     
