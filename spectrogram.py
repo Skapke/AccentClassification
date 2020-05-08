@@ -19,7 +19,7 @@ import torch
 import torchaudio
 import matplotlib.pyplot as plt
 import os
-folders = ["data", "data/recordings", "data/subset", "img"]
+folders = ["data", "data/recordings", "data/subset", "img/spectograms"]
 for folder in folders:
     if not os.path.exists(folder):
         os.makedirs(folder)
