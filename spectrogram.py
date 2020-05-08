@@ -110,7 +110,8 @@ for index, file in enumerate(original_filenames):
     save_spectrogram(specgram.t().numpy(), file[:-4])
 
     print(f"Progress:\t{round(((1+len(modified_filenames)+index)/total_number_files)*100, 2)}%", end='\r')
-    
+
+print("Finished making spectograms")
 # -
 
 
