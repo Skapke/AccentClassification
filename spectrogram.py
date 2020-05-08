@@ -34,7 +34,7 @@ def get_files(path):
 
 # ### Save the spectrogram to a .png file
 
-def save_spectrogram(data, filename):
+def save_spectrogram(data, filename, filepath):
     height = 200
     #width = int((specgram.size()[2]/specgram.size()[1]) * height)
     width = height*2
@@ -46,17 +46,15 @@ def save_spectrogram(data, filename):
     fig.add_axes(ax)
     ax.imshow(data, cmap='gray', aspect='auto')
     
-    fig.savefig("img/modified/" + filename + ".png", dpi=1)
+    fig.savefig("img/" + filepath + "/" + filename + ".png", dpi=1)
     fig.clf()
 
 
-# ### Tell it where to find the files
+# ### Tell it where to find the modified files
 
 # params to find the files
-data_path = "audio_files/modified"
-all_filenames = get_files(data_path)
-print(all_filenames)
-#test_filenames = [x for x in all_filenames if "german" in x]
+modified_filenames = get_files("audio_files/modified")
+original_filenames = get_files("audio_files/original")
 
 # ### Find length of the shortest audio file
 
@@ -65,12 +63,22 @@ print(all_filenames)
 # +
 lengths = []
 
-for index, file in enumerate(all_filenames):
+print("Determining size of the shortest audio file")
+total_number_files = len(modified_filenames) + len(original_filenames)
+for index, file in enumerate(modified_filenames):
     # load file and make spectrogram
-    waveform, sample_rate = torchaudio.load(data_path + "/" + file)
+    waveform, sample_rate = torchaudio.load("audio_files/modified/" + file)
     specgram = torchaudio.transforms.MelSpectrogram(n_fft=4000, win_length=400)(waveform)
     lengths.append(specgram.size()[2])
-    print(f"Progress:\t{round(((1+index)/len(all_filenames))*100, 2)}%", end='\r')
+    print(f"Progress:\t{round(((1+index)/total_number_files)*100, 2)}%", end='\r')
+
+for index, file in enumerate(original_filenames):
+    # load file and make spectrogram
+    waveform, sample_rate = torchaudio.load("audio_files/original/" + file)
+    specgram = torchaudio.transforms.MelSpectrogram(n_fft=4000, win_length=400)(waveform)
+    lengths.append(specgram.size()[2])
+    print(f"Progress:\t{round(((1+len(modified_filenames)+index)/total_number_files)*100, 2)}%", end='\r')
+
 min_length = min(lengths)
 print(f"Size of shortest audio file:\t{min_length}")
 # -
@@ -81,17 +89,30 @@ print(f"Size of shortest audio file:\t{min_length}")
 #initialize the figure once so we dont get memory issues
 fig = plt.figure(frameon=False)
 
-for index, file in enumerate(all_filenames):
+# The spectograms for the mofied audio samples and original samples is stored in seperate 
+# directories. This is done such that the ratio between modified and original samples can be
+# controlled
+print("Creating spectograms")
+for index, file in enumerate(modified_filenames):
     # load file and make spectrogram
-    waveform, sample_rate = torchaudio.load(data_path + "/" + file)
-    #specgram = torchaudio.transforms.MelSpectrogram(n_fft=4000, win_length=400)(waveform)
+    waveform, sample_rate = torchaudio.load("audio_files/modified/" + file)
     specgram = torchaudio.compliance.kaldi.spectrogram(waveform, dither=0.)
     
     # plot spectrogram and store it
-    #save_spectrogram(specgram.log2()[0,:,:].numpy(), file[:-4])
-    save_spectrogram(specgram.t().numpy(), file[:-4])
+    save_spectrogram(specgram.t().numpy(), file[:-4], "modified")
 
-    print(f"Progress:\t{round(((1+index)/len(all_filenames))*100, 2)}%", end='\r')
+    print(f"Progress:\t{round(((1+index)/total_number_files)*100, 2)}%", end='\r')
+    
+for index, file in enumerate(original_filenames):
+    # load file and make spectrogram
+    waveform, sample_rate = torchaudio.load("audio_files/original/" + file)
+    specgram = torchaudio.compliance.kaldi.spectrogram(waveform, dither=0.)
+    
+    # plot spectrogram and store it
+    save_spectrogram(specgram.t().numpy(), file[:-4], "original")
+
+    print(f"Progress:\t{round(((1+len(modified_filenames)+index)/total_number_files)*100, 2)}%", end='\r')
+    
 # -
 
 
