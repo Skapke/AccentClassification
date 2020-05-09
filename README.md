@@ -68,4 +68,3 @@ If interested in similar/related projects, you can check out the following links
 * GitHub Project: [Speech Accent Recognition](https://github.com/yatharthgarg/Speech-Accent-Recognition)
 * Random Tutorial: [Urban Sound using Keras](https://medium.com/gradientcrescent/urban-sound-classification-using-convolutional-neural-networks-with-keras-theory-and-486e92785df4)
 * Documentation: [Librosa](https://librosa.github.io/librosa/index.html)
-
